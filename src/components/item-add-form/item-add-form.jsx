@@ -8,13 +8,13 @@ class ItemAddForm extends Component {
     valueInput: ''
   };
 
-  changeValueInput = (e) => {
+  onChangeInputValue = (e) => {
     this.setState({
       valueInput: e.target.value
     });
   };
 
-  submitForm = (e) => {
+  onSubmitForm = (e) => {
     e.preventDefault();
     this.props.addItem(this.state.valueInput);
     this.setState({
@@ -26,13 +26,13 @@ class ItemAddForm extends Component {
     return (
       <form 
         className="item-add-form d-flex"
-        onSubmit={this.submitForm} >
+        onSubmit={this.onSubmitForm} >
         <div className="item-add-input flex-grow-1">
           <input 
             className="form-control" 
             type="text"
             placeholder="what needs to be done?"
-            onChange={this.changeValueInput}
+            onChange={this.onChangeInputValue}
             value={this.state.valueInput} />
         </div>
         <button className="btn btn-primary">Add Item</button>

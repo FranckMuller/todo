@@ -1,0 +1,12 @@
+.item-edit-form {
+  flex: 0 0 100%;
+  margin-top: 10px;
+}
+
+.item-edit-form .item-edit-input {
+  padding-right: 20px;
+}
+
+.item-edit-form button {
+  flex: 0 0 140px;
+}

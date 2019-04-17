@@ -48,6 +48,16 @@ class App extends Component {
     });
   };
 
+  searchItems = (searchValue) => {
+    console.log(1);
+    this.setState(({todoData}) => {
+      const newArray = todoData.filter((el) => el.label.toLowerCase().indexOf(searchValue) !== -1);
+      return {
+        todoData: newArray
+      };
+    });
+  };
+
   addItem = (label) => {
     const newItem = this.createTodoItem(label);
     this.setState(({ todoData }) => {
@@ -81,8 +91,21 @@ class App extends Component {
     });
   };
 
+  editItem = (id, label) => {
+    this.setState(({ todoData }) => {
+      const idx = this.findTodoItemIdx(todoData, id);
+      const oldItem = todoData[idx];
+      const newItem = { ...oldItem, label: label };
+      const newArray = [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
+      return {
+        todoData: newArray
+      };
+    });
+  };
+
   render() {
     const { todoData } = this.state;
+    const { toggleImportant, deleteItem, toggleDone, editItem, addItem, state, searchItems } = this;
 
     const doneCount = todoData.filter(({ done }) => done === true ).length;
     const importantCount = todoData.filter(({ important }) => important === true ).length;
@@ -95,16 +118,17 @@ class App extends Component {
           doneCount={doneCount}
           importantCount={importantCount} />
         <DoubleRow 
-          left={<SearchPanel />} 
+          left={<SearchPanel searchItems={searchItems} />} 
           right={<StatusFilterPanel />}
         />
         <TodoList 
-          toggleImportant={this.toggleImportant}
-          deleteItem={this.deleteItem}
-          toggleDone={this.toggleDone}
-          {...this.state}
+          toggleImportant={toggleImportant}
+          deleteItem={deleteItem}
+          toggleDone={toggleDone}
+          editItem={editItem}
+          {...state}
         />
-        <ItemAddForm addItem={this.addItem} />
+        <ItemAddForm addItem={addItem} />
       </div>
     );
   };

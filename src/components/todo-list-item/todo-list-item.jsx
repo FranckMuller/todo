@@ -1,40 +1,68 @@
-import React from 'react';
+import React, { Component } from 'react';
+
+import ItemEditForm from '../item-edit-form';
 
 import './todo-list-item.css'
 
-const TodoListItem = ({ label, done, important, deleteItem, toggleDone, toggleImportant }) => {
-  let classNames = 'label';
-  if(done) classNames += ' done';
-  if(important) classNames += ' important';
+class TodoListItem extends Component {
 
-  return (
-    <span className="d-flex align-items-center todo-list-item justify-content-between">
-      <span 
-        className={classNames}
-        onClick={toggleDone}
-        >
-        { label }
+  state = {
+    showEditForm: false
+  }
+
+  toggleItemEditForm = () => {
+    this.setState(({ showEditForm }) => {
+      return {
+        showEditForm: !showEditForm
+      }
+    });
+  };
+
+  render() {
+    const { label, done, important,
+            deleteItem, toggleDone,
+            toggleImportant, ...editItemProps } = this.props;
+    const { showEditForm } = this.state;
+
+    let classNames = 'label';
+    if(done) classNames += ' done';
+    if(important) classNames += ' important';
+
+    const itemEditFrom = (showEditForm) 
+                          ? <ItemEditForm {...editItemProps} /> 
+                          : null;
+
+    return (
+      <span className="d-flex flex-wrap align-items-center todo-list-item justify-content-between">
+        <span 
+          className={classNames}
+          onClick={toggleDone}
+          >
+          { label }
+        </span>
+        <span>
+          <button 
+            onClick={toggleImportant} 
+            className={"btn btn-outline-success" + (important ? ' active' : '')}>
+            <i className="fa fa-exclamation"></i>
+          </button>
+
+          <button
+            onClick={this.toggleItemEditForm}       
+            className={"btn btn-outline-info" + (showEditForm ? ' active' : '')}>
+            <i className="fa fa-pencil"></i>
+          </button>
+
+          <button
+            onClick={deleteItem}         
+            className="btn btn-outline-danger">
+            <i className="fa fa-trash-o"></i>
+          </button>
+        </span>
+        {itemEditFrom}
       </span>
-      <span>
-        <button 
-          onClick={toggleImportant} 
-          className={"btn btn-outline-success" + (important ? ' active' : '')}>
-          <i className="fa fa-exclamation"></i>
-        </button>
-
-        <button       
-          className="btn btn-outline-info">
-          <i className="fa fa-pencil"></i>
-        </button>
-
-        <button
-          onClick={deleteItem}         
-          className="btn btn-outline-danger">
-          <i className="fa fa-trash-o"></i>
-        </button>
-      </span>
-    </span>
-  );
+    );
+  };
 };
 
 export default TodoListItem;
