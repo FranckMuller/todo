@@ -12,7 +12,7 @@ const StatusFilterPanel = ({ onFilterItems, filterValue }) => {
         className={"btn btn-primary" + (filterValue === 'done' ? ' active' : '')}
         onClick={() => onFilterItems('done')} >Done</button>
       <button 
-        className={"btn btn-primary" + (filterValue === 'done' ? ' important' : '')}
+        className={"btn btn-primary" + (filterValue === 'important' ? ' active' : '')}
         onClick={() => onFilterItems('important')} >Important</button>
     </div>
   );
