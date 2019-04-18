@@ -28,7 +28,8 @@ class App extends Component {
       this.createTodoItem('Drink Cofee'),
       this.createTodoItem('Learn React'),
       this.createTodoItem('Build Awesome App')
-    ]
+    ],
+    filterValue: ''
   };
 
   findTodoItemIdx(array, id) {
@@ -49,13 +50,9 @@ class App extends Component {
   };
 
   searchItems = (searchValue) => {
-    console.log(1);
-    this.setState(({todoData}) => {
-      const newArray = todoData.filter((el) => el.label.toLowerCase().indexOf(searchValue) !== -1);
-      return {
-        todoData: newArray
-      };
-    });
+    this.setState({
+      filterValue: searchValue
+    })
   };
 
   addItem = (label) => {
@@ -103,13 +100,23 @@ class App extends Component {
     });
   };
 
+  filterItems = (markerFilter) => {
+    this.setState({
+      filterValue: markerFilter
+    });
+  }
+
   render() {
-    const { todoData } = this.state;
-    const { toggleImportant, deleteItem, toggleDone, editItem, addItem, state, searchItems } = this;
+    const { todoData, filterValue } = this.state;
+    const { toggleImportant, deleteItem, toggleDone, editItem, addItem, searchItems, filterItems } = this;
 
     const doneCount = todoData.filter(({ done }) => done === true ).length;
     const importantCount = todoData.filter(({ important }) => important === true ).length;
     const todoCount = todoData.length - doneCount;
+
+    const data = 
+      todoData.filter((el) => el.label.toLowerCase().indexOf(filterValue) !== -1
+                      || el[filterValue] === true);
 
     return (
       <div className="app">
@@ -119,14 +126,14 @@ class App extends Component {
           importantCount={importantCount} />
         <DoubleRow 
           left={<SearchPanel searchItems={searchItems} />} 
-          right={<StatusFilterPanel />}
+          right={<StatusFilterPanel filterItems={filterItems} filterValue={filterValue} />}
         />
         <TodoList 
           toggleImportant={toggleImportant}
           deleteItem={deleteItem}
           toggleDone={toggleDone}
           editItem={editItem}
-          {...state}
+          todoData={data}
         />
         <ItemAddForm addItem={addItem} />
       </div>
