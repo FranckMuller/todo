@@ -100,7 +100,7 @@ class App extends Component {
     });
   };
 
-  filterItems = (markerFilter) => {
+  onFilterItems = (markerFilter) => {
     this.setState({
       filterValue: markerFilter
     });
@@ -108,7 +108,7 @@ class App extends Component {
 
   render() {
     const { todoData, filterValue } = this.state;
-    const { toggleImportant, deleteItem, toggleDone, editItem, addItem, searchItems, filterItems } = this;
+    const { toggleImportant, deleteItem, toggleDone, editItem, addItem, searchItems, onFilterItems } = this;
 
     const doneCount = todoData.filter(({ done }) => done === true ).length;
     const importantCount = todoData.filter(({ important }) => important === true ).length;
@@ -126,7 +126,7 @@ class App extends Component {
           importantCount={importantCount} />
         <DoubleRow 
           left={<SearchPanel searchItems={searchItems} />} 
-          right={<StatusFilterPanel filterItems={filterItems} filterValue={filterValue} />}
+          right={<StatusFilterPanel onFilterItems={onFilterItems} filterValue={filterValue} />}
         />
         <TodoList 
           toggleImportant={toggleImportant}
