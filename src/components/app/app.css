@@ -1,4 +1,8 @@
 .app {
-  max-width: 800px;
+  flex: 0 0 700px;
+  max-width: 700px;
   margin : 0 auto;
+  margin-top: -100px;
+  position: relative;
+  z-index: 20;
 }

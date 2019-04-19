@@ -9,10 +9,10 @@ class SearchPanel extends Component {
   };
 
   onChangeInputValue = (e) => {
-    this.props.searchItems(e.target.value.toLowerCase());
     this.setState({
       inputValue: e.target.value
     });
+    this.props.onSearchItems(e.target.value);
   }; 
 
   render() {

@@ -1,3 +1,18 @@
 .todo-list {
   margin-bottom: 20px;
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.todo-list li {
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+}
+
+.todo-list li + li {
+  margin-top: 10px;
+  border-top: 2px solid #ffffff;
 }

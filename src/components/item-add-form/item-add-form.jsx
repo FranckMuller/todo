@@ -35,7 +35,7 @@ class ItemAddForm extends Component {
             onChange={this.onChangeInputValue}
             value={this.state.valueInput} />
         </div>
-        <button className="btn btn-primary">Add Item</button>
+        <button className="btn">Add Item</button>
       </form>
     );
   }

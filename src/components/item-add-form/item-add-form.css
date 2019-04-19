@@ -1,3 +1,14 @@
 .item-add-form  .item-add-input {
   padding-right: 20px;
 }
+
+.item-add-form button {
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+.item-add-form button:hover {
+  color: #ad00ff;
+  box-shadow: 0px 0px 22px 0px rgba(82,56,115,1);
+  border-color: #ffffff;
+}

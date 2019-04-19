@@ -5,7 +5,6 @@ import './todo-list.css'
 
 const TodoList = ({ todoData, deleteItem, toggleDone, toggleImportant, editItem }) => {
   const items = todoData.map((item) => {
-
     return (
       <li className="list-group-item" key={item.id}>
         <TodoListItem
@@ -18,9 +17,11 @@ const TodoList = ({ todoData, deleteItem, toggleDone, toggleImportant, editItem 
       </li>
     );
   });
+  const notice = (items.length !== 0) ? null : <li className="list-group-item text-center">I can not find</li>
   return (
     <ul className="todo-list list-group list-unstyled">
       {items}
+      {notice}
     </ul>
   );
 };

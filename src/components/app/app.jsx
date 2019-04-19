@@ -27,9 +27,12 @@ class App extends Component {
     todoData: [
       this.createTodoItem('Drink Cofee'),
       this.createTodoItem('Learn React'),
-      this.createTodoItem('Build Awesome App')
+      this.createTodoItem('Build Awesome App'),
+      this.createTodoItem('Have a Lunch'),
+      this.createTodoItem('Become a Guru React JS')
     ],
-    filterValue: ''
+    term: '',
+    filterMarker: 'all'
   };
 
   findTodoItemIdx(array, id) {
@@ -100,23 +103,50 @@ class App extends Component {
     });
   };
 
-  onFilterItems = (markerFilter) => {
-    this.setState({
-      filterValue: markerFilter
+  searchItems = (items, value) => {
+    if(value.length === 0) return items;
+    return items = items.filter((el) => {
+      return el.label.toLowerCase().includes(value.toLowerCase());
     });
-  }
+  };
+
+  onSearchItems = (term) => {
+    this.setState({
+      term
+    });
+  };
+
+  onFilterItems = (filterMarker) => {
+    this.setState({
+      filterMarker
+    });
+  };
+
+  filterItems(items, filterMarker) {
+    if(filterMarker === 'all') return items;
+    if(filterMarker === 'active') {
+      return items.filter((el) => {
+        return !el.done
+      })
+    }
+    return items.filter((el) => {
+      return el[filterMarker]
+    });
+  };
 
   render() {
-    const { todoData, filterValue } = this.state;
-    const { toggleImportant, deleteItem, toggleDone, editItem, addItem, searchItems, onFilterItems } = this;
+    const { todoData, term, filterMarker } = this.state;
+    const { toggleImportant, deleteItem, toggleDone, editItem, addItem, onSearchItems, onFilterItems } = this;
 
     const doneCount = todoData.filter(({ done }) => done === true ).length;
+
     const importantCount = todoData.filter(({ important }) => important === true ).length;
+    
     const todoCount = todoData.length - doneCount;
 
-    const data = 
-      todoData.filter((el) => el.label.toLowerCase().indexOf(filterValue) !== -1
-                      || el[filterValue] === true);
+    let visibleItems = this.searchItems(todoData, term);
+    visibleItems = this.filterItems(visibleItems, filterMarker);
+    
 
     return (
       <div className="app">
@@ -125,15 +155,15 @@ class App extends Component {
           doneCount={doneCount}
           importantCount={importantCount} />
         <DoubleRow 
-          left={<SearchPanel searchItems={searchItems} />} 
-          right={<StatusFilterPanel onFilterItems={onFilterItems} filterValue={filterValue} />}
+          left={<SearchPanel onSearchItems={onSearchItems} />} 
+          right={<StatusFilterPanel onFilterItems={onFilterItems} filterMarker={filterMarker} />}
         />
         <TodoList 
           toggleImportant={toggleImportant}
           deleteItem={deleteItem}
           toggleDone={toggleDone}
           editItem={editItem}
-          todoData={data}
+          todoData={visibleItems}
         />
         <ItemAddForm addItem={addItem} />
       </div>

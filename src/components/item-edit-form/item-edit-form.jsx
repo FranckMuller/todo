@@ -37,7 +37,7 @@ class ItemEditForm extends Component {
             value={inputValue}
             onChange={this.onChangeInputValue} />
         </div>
-        <button className="btn btn-outline-primary">Edit Item</button>
+        <button className="btn">Edit Item</button>
       </form>
     );
   };

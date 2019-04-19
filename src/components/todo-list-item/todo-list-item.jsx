@@ -43,19 +43,19 @@ class TodoListItem extends Component {
         <span>
           <button 
             onClick={toggleImportant} 
-            className={"btn btn-outline-success" + (important ? ' active' : '')}>
+            className={"btn " + (important ? ' active' : '')}>
             <i className="fa fa-exclamation"></i>
           </button>
 
           <button
             onClick={this.toggleItemEditForm}       
-            className={"btn btn-outline-info" + (showEditForm ? ' active' : '')}>
+            className={"btn " + (showEditForm ? ' active' : '')}>
             <i className="fa fa-pencil"></i>
           </button>
 
           <button
             onClick={deleteItem}         
-            className="btn btn-outline-danger">
+            className="btn">
             <i className="fa fa-trash-o"></i>
           </button>
         </span>

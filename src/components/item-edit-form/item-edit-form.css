@@ -7,6 +7,7 @@
   padding-right: 20px;
 }
 
-.item-edit-form button {
+.item-edit-form button.btn {
   flex: 0 0 140px;
+  color: #fff;
 }
